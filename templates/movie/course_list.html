@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 style="text-align: center; color: #333;">Bizning Kurslarimiz</h1>
+
+    {% for course in courses %}
+        <div style="border: 1px solid #ccc; border-radius: 8px; margin-bottom: 20px; padding: 20px; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+
+            <h2 style="color: #007bff; margin-top: 0;">{{ course.title }}</h2>
+            <p><strong>Kurs haqida:</strong> {{ course.description }}</p>
+            <p><strong>Narxi:</strong> {{ course.price }} so'm</p>
+
+            <div style="margin: 15px 0; display: flex; align-items: center; gap: 10px;">
+                <a href="{% url 'like_course' course.id %}" style="text-decoration: none; font-size: 18px; font-weight: bold;">
+                    {% if course in current_student.liked_courses.all %}
+                        ❤️ Yoqdi
+                    {% else %}
+                        🤍 Like
+                    {% endif %}
+                </a>
+                <span style="color: #666; font-size: 14px; background: #eee; padding: 2px 8px; border-radius: 20px;">
+                    {{ course.likes.count }} ta like
+                </span>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid #eee;">
+
+            <h3 style="color: #28a745; font-size: 18px;">Yozilgan talabalar:</h3>
+            <ul>
+                {% for student in course.students.all %}
+                    <li style="margin-bottom: 10px;">
+                        <strong>{{ student.name }}</strong> <br>
+                        <span style="color: #666; font-size: 14px;">
+                            Email: {{ student.email }} | Tel: {{ student.phone }} | Manzil: {{ student.address }}
+                        </span>
+                    </li>
+                {% empty %}
+                    <li style="color: #999; list-style-type: none;">Hozircha talabalar yozilmagan.</li>
+                {% endfor %}
+            </ul>
+
+        </div>
+    {% empty %}
+        <p style="text-align: center; color: red; font-weight: bold;">Hozircha hech qanday kurs mavjud emas.</p>
+    {% endfor %}
+{% endblock %}
