@@ -6,6 +6,11 @@ class Course(models.Model):
     description = models.TextField(verbose_name="Kurs haqida malumot")
     price = models.IntegerField(verbose_name="Kurs narxi")
     image = models.ImageField(upload_to="course_images/", blank=True,null=True, verbose_name="kurs rasmi")
+    published_year = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True,
+        verbose_name="Taqdim etilgan yili"
+    )
 
     class Meta:
         verbose_name ="Kurs"
@@ -32,3 +37,18 @@ class Student(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class CourseLike(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+
+
+class Comment(models.Model):
+    description = models.TextField()
+    created = models.DateTimeField(auto_now=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2,default=0)
+    title = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.title

@@ -33,8 +33,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'unfold',
-    'unfold.contrib.filters',
+    # 'unfold',
+    # 'unfold.contrib.filters',
 
     # 'jazzmin',
     'django.contrib.admin',
