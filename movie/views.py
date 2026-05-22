@@ -1,7 +1,6 @@
 from django.http import Http404
-from django.shortcuts import render,redirect
-from django.urls import conf
-from matplotlib.style.core import context
+from django.shortcuts import render,redirect,get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from  .models import Course,Student
 
@@ -26,3 +25,8 @@ def like_course(request, course_id):
             student.liked_courses.add(course)
 
     return redirect('course_list')
+
+@login_required(login_url='course_list')
+def create_like(request,course_id):
+    course = get_object_or_404()
+
